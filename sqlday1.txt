@@ -1,0 +1,69 @@
+create database sqldatabase;
+use sqldatabase;
+create table customer(Id int not null primary key,
+FirstName nvarchar(40),
+LastName nvarchar(40),
+City nvarchar(40),
+Country nvarchar(40),
+Phone nvarchar(20));
+
+create table Orders(Id int not null primary key,
+OrderDate datetime,
+Ordernumber nvarchar(10),
+Customer int REFERENCES customer(id),
+TotalAmount decimal(12,2));
+
+create table OrderItem(Id int not null primary key,
+OrderId int REFERENCES Orders(Id),
+ProductId int REFERENCES Product(Id) ,
+UnitPrice decimal(12,2),
+Quantity int);
+
+create table Product(Id int not null primary key,
+ProductName nvarchar(50),
+UnitPrice decimal(12,2),
+Package nvarchar(30),
+IsDiscontinued bit);
+
+INSERT INTO customer
+values(1,'shristi','ukkali','vijayapur','India','3452689786'),
+(2,'shree','ukkali','Nidagundi','german','3423567568'),
+(3,'bhagya','satgad','bangalore','India','6564823434');
+
+INSERT INTO Product
+VALUES (101, 'MObile', 10000, 'Cardboard', 0),
+(102, 'Lap', 50000, 'Box', 0),
+(103, 'Tab', 22000, 'Cardboard', 0),
+(104, 'bench', 1000, 'Cardboard', 0),
+(105, 'Earpods', 2000, 'Box', 0),
+(106, 'Table', 10000, 'Box', 1);
+INSERT INTO product
+VALUES (NULL,'GGHC',43234, 'FF',1);
+
+
+SELECT * FROM product
+SELECT * FROM customer;
+
+INSERT INTO Orders
+VALUES (119, '2023-01-09 11:30', '565333', '2', 10000),
+(120, '2023-01-09 06:45', '734664', '3', 20000),
+(121, '2023-01-01 08:34', '464546', '1', 2000);
+
+INSERT INTO orderItem
+VALUES (401, 119, 106, 10000, 1),
+(402, 120, 106, 10000, 1),
+(403, 120, 101, 10000, 1),
+(404, 121,105,105,1);
+
+SELECT * FROM orderItem;
+
+
+ 
+ SELECT * FROM orders;
+
+
+SELECT country FROM customer 
+WHERE firstName LIKE 'I%' OR firstName LIKE 'S%';
+ 
+SELECT * FROM customer 
+WHERE firstName LIKE '__t%';
